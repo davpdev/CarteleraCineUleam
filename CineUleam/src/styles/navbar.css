@@ -1,0 +1,257 @@
+.navbar {
+    background: linear-gradient(135deg, #007A33 0%, #005D27 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
+}
+
+.navbar-logo-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.navbar-logo-text {
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1rem;
+    align-items: center;
+}
+
+.navbar-item {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.navbar-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-link.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+}
+
+.navbar-logout {
+    background: rgba(200, 16, 46, 0.8) !important;
+}
+
+.navbar-logout:hover {
+    background: rgba(200, 16, 46, 1) !important;
+}
+
+.navbar-user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    margin-left: 1rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar-user-email {
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.navbar-user-badge {
+    background: #C8102E;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Mobile Menu Toggle */
+.navbar-mobile-toggle {
+    display: none;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.navbar-mobile-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile Menu */
+.navbar-mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: rgba(0, 93, 39, 0.95);
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-mobile-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
+}
+
+.navbar-mobile-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-mobile-link.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    font-weight: 600;
+}
+
+.navbar-mobile-logout {
+    background: rgba(200, 16, 46, 0.8) !important;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.navbar-mobile-logout:hover {
+    background: rgba(200, 16, 46, 1) !important;
+}
+
+.navbar-mobile-user {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-mobile-user-email {
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.navbar-mobile-user-badge {
+    background: #C8102E;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 1rem;
+    }
+
+    .navbar-logo-text {
+        font-size: 1.25rem;
+    }
+
+    .navbar-logo-img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .navbar-menu {
+        display: none;
+    }
+
+    .navbar-mobile-toggle {
+        display: block;
+    }
+
+    .navbar-mobile-menu {
+        display: flex;
+    }
+
+    .navbar-user {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-logo-text {
+        font-size: 1.1rem;
+    }
+
+    .navbar-logo-img {
+        width: 30px;
+        height: 30px;
+    }
+}
+

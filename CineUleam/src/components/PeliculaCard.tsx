@@ -4,13 +4,17 @@ import { HorariosDisponibles } from "./HorariosDisponibles";
 interface PeliculaCardProps {
     pelicula: IPeliculaConCartelera;
     onReservar: (peliculaId: string, salaId: string, horario: string) => void;
+    isAdmin?: boolean;
 }
 
-export const PeliculaCard = ({ pelicula, onReservar }: PeliculaCardProps) => {
+export const PeliculaCard = ({ pelicula, onReservar, isAdmin = false }: PeliculaCardProps) => {
     const handleReservarHorario = (horario: string) => {
         const salaId = pelicula.salaAsignada?.idSalas || "";
         onReservar(pelicula.idPeliculas, salaId, horario);
     };
+
+    // Verificar si hay cartelera y horarios disponibles
+    const tieneCartelera = pelicula.cartelera && pelicula.cartelera.length > 0;
 
     return (
         <div className="pelicula-card">
@@ -32,11 +36,46 @@ export const PeliculaCard = ({ pelicula, onReservar }: PeliculaCardProps) => {
                     </div>
                 )}
 
-                {pelicula.cartelera && (
-                    <HorariosDisponibles 
-                        horarios={pelicula.cartelera} 
-                        onReservar={handleReservarHorario}
-                    />
+                {tieneCartelera ? (
+                    <>
+                        {isAdmin ? (
+                            <div className="horarios-container">
+                                <h3>Horarios Disponibles:</h3>
+                                <div className="horarios-grid">
+                                    {pelicula.cartelera!.map((carteleraItem) => (
+                                        <div
+                                            key={carteleraItem.idCartelera}
+                                            className="horario-btn"
+                                            style={{
+                                                opacity: 0.7,
+                                                cursor: "not-allowed",
+                                                backgroundColor: "#ccc"
+                                            }}
+                                        >
+                                            {carteleraItem.horarios}
+                                        </div>
+                                    ))}
+                                </div>
+                                <p style={{ 
+                                    color: "#666", 
+                                    fontSize: "0.9rem", 
+                                    marginTop: "0.5rem",
+                                    fontStyle: "italic"
+                                }}>
+                                    Los administradores no pueden realizar reservas
+                                </p>
+                            </div>
+                        ) : (
+                            <HorariosDisponibles 
+                                horarios={pelicula.cartelera!} 
+                                onReservar={handleReservarHorario}
+                            />
+                        )}
+                    </>
+                ) : (
+                    <div className="horarios-container">
+                        <p className="sin-horarios">No hay horarios disponibles para esta película</p>
+                    </div>
                 )}
             </div>
         </div>

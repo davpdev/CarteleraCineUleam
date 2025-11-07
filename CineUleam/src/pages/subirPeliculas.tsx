@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { PeliculaServices } from "../services/pelicula.service";
 import type { IPeliculas } from "../interfaces/peliculas.interfaces";
 import { useUser } from "../context/usuario.context";
@@ -15,6 +16,22 @@ const SubirPeliculas: React.FC = () => {
   >(CATEGORIAS[0]);
   
   const { user, loading } = useUser();
+  const navigate = useNavigate();
+
+  // Protección de ruta: solo administradores pueden acceder
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        navigate("/");
+        return;
+      }
+      if (!user.rol) {
+        alert("No tienes permisos para acceder a esta página. Solo los administradores pueden subir películas.");
+        navigate("/home");
+        return;
+      }
+    }
+  }, [user, loading, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,6 +101,15 @@ const SubirPeliculas: React.FC = () => {
       }
     }
   };
+
+  // Mostrar nada mientras se carga o si no es admin
+  if (loading || !user || !user.rol) {
+    return (
+      <div className="subir-peliculas-container">
+        <div className="loading">Cargando...</div>
+      </div>
+    );
+  }
 
   return (
     <>

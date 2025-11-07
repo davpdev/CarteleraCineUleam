@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../api/supabase.config";
-import { ReservaServices } from "../services/reserva.service";
 import { HomeService } from "../services/home.service";
 import { FiltrosCartelera } from "../components/FiltrosCartelera";
 import { PeliculaCard } from "../components/PeliculaCard";
+import { useUser } from "../context/usuario.context";
 import type { IPeliculaConCartelera } from "../interfaces/home.interfaces";
 import type { ISalas } from "../interfaces/salas.interfaces";
 import "../styles/home.css";
@@ -16,6 +15,10 @@ const Home = () => {
     const [categoriaFiltro, setCategoriaFiltro] = useState<string>("todas");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user, loading: userLoading } = useUser();
+
+    // Validación explícita del rol: admin = true, no-admin = false o undefined
+    const isAdmin = user?.rol === true;
 
     useEffect(() => {
         cargarDatos();
@@ -35,40 +38,31 @@ const Home = () => {
         }
     };
 
-    const handleReservar = async (peliculaId: string, salaId: string, horario: string) => {
+    const handleReservar = (peliculaId: string, salaId: string, _horario: string) => {
+        // Validación: solo usuarios no-admin pueden reservar
+        if (isAdmin) {
+            alert("Los administradores no pueden realizar reservas. Esta función está disponible solo para usuarios regulares.");
+            return;
+        }
+
+        // Validación: debe haber un usuario autenticado
+        if (!user) {
+            alert("Debes iniciar sesión para realizar una reserva");
+            navigate("/");
+            return;
+        }
+
+        // Validación: debe haber una sala disponible
         if (!salaId) {
             alert("No hay salas disponibles para esta película");
             return;
         }
 
-        try {
-            const { data: { user } } = await supabase.auth.getUser();
-            
-            if (!user) {
-                alert("Por favor, inicia sesión para reservar");
-                navigate("/");
-                return;
-            }
-
-            const reserva = {
-                idReserva: crypto.randomUUID(),
-                peliculasID: peliculaId,
-                usuarioId: user.id,
-                salasID: salaId,
-                reserva: true
-            };
-
-            const resultado = await ReservaServices.postReserva(reserva);
-            if (resultado) {
-                alert(`Reserva exitosa para ${horario}`);
-                navigate("/reservar");
-            } else {
-                alert("Error al realizar la reserva");
-            }
-        } catch (error) {
-            console.error("Error al realizar reserva:", error);
-            alert("Error al realizar la reserva");
-        }
+        // Guardar la película seleccionada para pre-seleccionarla en la página de reservar
+        localStorage.setItem("peliculaReservaSeleccionada", peliculaId);
+        
+        // Redirigir a la página de reservar
+        navigate("/reservar");
     };
 
     const peliculasFiltradas = HomeService.filtrarPeliculas(
@@ -77,10 +71,21 @@ const Home = () => {
         categoriaFiltro
     );
 
-    if (loading) {
+    // Mostrar loading mientras se cargan los datos o el usuario
+    if (loading || userLoading) {
         return (
             <div className="home-container">
                 <div className="loading">Cargando cartelera...</div>
+            </div>
+        );
+    }
+
+    // Si no hay usuario, no debería llegar aquí (debería estar protegido por el navbar)
+    // Pero por si acaso, verificamos
+    if (!user) {
+        return (
+            <div className="home-container">
+                <div className="loading">Cargando información del usuario...</div>
             </div>
         );
     }
@@ -112,16 +117,20 @@ const Home = () => {
                                 key={pelicula.idPeliculas}
                                 pelicula={pelicula}
                                 onReservar={handleReservar}
+                                isAdmin={isAdmin}
                             />
                         ))}
                     </div>
                 )}
             </div>
 
-            <div className="subir-peliculas-container">
+            {/* Mostrar botón de subir películas solo para administradores */}
+            {isAdmin && (
+                <div className="subir-peliculas-container">
                     <h1>Subir Peliculas</h1>
                     <button onClick={() => navigate("/subir-peliculas")}>Subir Pelicula</button>
                 </div>
+            )}
         </div>
     );
 };

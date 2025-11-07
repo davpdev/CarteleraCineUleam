@@ -1,20 +1,49 @@
 import { useEffect, useState } from "react";
 import { SalaServices } from "../services/sala.service";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useUser } from "../context/usuario.context";
 import "../styles/asientos.css";
 
 const SalasView = () => {
   const { idSalas } = useParams();
+  const navigate = useNavigate();
+  const { user, loading } = useUser();
   const [sala, setSala] = useState<any>(null);
   const [asientosSeleccionados, setAsientosSeleccionados] = useState<number[]>([]);
 
+  // Protección de ruta: solo administradores pueden acceder
   useEffect(() => {
-    const fetchSala = async () => {
-      const data = await SalaServices.getByIdSalas(idSalas!);
-      setSala(data);
-    };
-    fetchSala();
-  }, []);
+    if (!loading) {
+      if (!user) {
+        navigate("/");
+        return;
+      }
+      if (!user.rol) {
+        alert("No tienes permisos para acceder a esta página. Solo los administradores pueden gestionar salas.");
+        navigate("/home");
+        return;
+      }
+    }
+  }, [user, loading, navigate]);
+
+  useEffect(() => {
+    if (user?.rol && idSalas) {
+      const fetchSala = async () => {
+        const data = await SalaServices.getByIdSalas(idSalas);
+        setSala(data);
+      };
+      fetchSala();
+    }
+  }, [user, idSalas]);
+
+  // Mostrar nada mientras se carga o si no es admin
+  if (loading || !user || !user.rol) {
+    return (
+      <div className="asientos-container">
+        <div>Cargando...</div>
+      </div>
+    );
+  }
 
   if (!sala) return <p>Cargando...</p>;
 
