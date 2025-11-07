@@ -2,6 +2,7 @@ import { useState } from "react";
 import { PeliculaServices } from "../services/pelicula.service";
 import type { IPeliculas } from "../interfaces/peliculas.interfaces";
 const CATEGORIAS: string[] = ["terror", "accion", "comedia", "suspenso"];
+import { supabase } from "../api/supabase.config";
 
 const SubirPeliculas: React.FC = () => {
   const [nombrePelicula, setNombrePelicula] = useState("");
@@ -28,6 +29,11 @@ const SubirPeliculas: React.FC = () => {
       setErrorMensaje("La duracion es requerida");
       return;
     }
+    const user = (await supabase.auth.getUser()).data.user;
+    if (!user) {
+      setErrorMensaje("Debes iniciar sesión para subir una película");
+      return;
+    }
     const pelicula: Omit<IPeliculas, "idPeliculas"> = {
       nombrePelicula,
       descripcion,
@@ -37,6 +43,7 @@ const SubirPeliculas: React.FC = () => {
         | "accion"
         | "comedia"
         | "suspenso",
+        usuario_id: user.id
     };
 
     const resultado = await PeliculaServices.postPelicula(pelicula);

@@ -4,4 +4,5 @@ export interface IPeliculas{
     categoria: 'terror' | 'accion' | 'comedia' | 'suspenso';
     descripcion: string;
     duracion: string;
+    usuario_id: string;
 }

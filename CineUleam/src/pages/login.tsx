@@ -91,7 +91,7 @@ return (
             <h1>Iniciar Sesión</h1>
             <form onSubmit = {handleSubmit}>
                 <div className = "form-group">
-                    <label>Usuario:</label>
+                    <label>Email:</label>
                     <input
                     type = "email"
                     placeholder = "Ingrese su email"
