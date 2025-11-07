@@ -1,0 +1,150 @@
+body {
+    background: #f0f0f0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    color: #333;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*min-height: 100vh;*/
+    padding: 10vh;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box
+}
+
+.login-card {
+    background: rgba(0,0,0,0.1);
+    padding: 10vh;
+    border-radius: 10vh;
+    box-shadow: 0 4vh 6vh rgb(255, 1, 1);
+    width: 25%;
+    max-width: 400vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: s
+}
+
+.sistema-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e74c3c;
+}
+
+.sistema-nombre {
+    margin: 0 0 10px 0;
+    color: #000000;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.sistema-subtitulo {
+    margin: 0;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.login-card h1 {
+    text-align: center;
+    color: #333;
+    margin: 0 0 25px 0;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #e74c3c; 
+}
+
+.form-group input.input-error {
+    border-color: #e74c3c;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #c0392b;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.error-message::before {
+    content: "⚠ ";
+}
+
+.registro-link {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+  }
+  
+  .registro-link p {
+    margin: 0 0 15px 0;
+    color: #666;
+    font-size: 15px;
+  }
+  
+  .btn-registro {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .btn-registro:hover {
+    background-color: #e74c3c;
+    color: white;
+  }

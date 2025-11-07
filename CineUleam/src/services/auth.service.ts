@@ -45,6 +45,25 @@ export const authService = {
             console.log('Error al cerrar sesión', error.message)
             return 
         }
+    },
+
+    singInGoogle: async() =>{
+        try{
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                  redirectTo: "http://localhost:5173/home"
+                }
+            });
+            if ( error ){
+                console.log('Error al autentificarse con google', error.message)
+                return null;
+            }
+            return data;
+        }catch (e){
+            console.error(e)
+            throw e
+        }
     }
 
 }
