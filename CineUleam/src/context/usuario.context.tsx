@@ -17,19 +17,39 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user ?? null);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("rol")
+          .eq("id", user.id)
+          .single();
+  
+        setUser({ ...user, rol: profile?.rol ?? false });
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     };
-
+  
     getSession();
-
+  
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("rol")
+          .eq("id", session.user.id)
+          .single();
+  
+        setUser({ ...session.user, rol: profile?.rol ?? false });
+      } else {
+        setUser(null);
+      }
     });
-
+  
     return () => subscription.unsubscribe();
   }, []);
 

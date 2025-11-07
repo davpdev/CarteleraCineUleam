@@ -1,0 +1,47 @@
+.asientos-container {
+    padding: 40px;
+    text-align: center;
+  }
+  
+  .asientos-grid {
+    display: grid;
+    gap: 10px;
+    margin: 30px auto;
+    max-width: 600px;
+  }
+  
+  .asiento {
+    padding: 15px;
+    border-radius: 6px;
+    background: #e6e6e6;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid #006837;
+    transition: 0.3s;
+  }
+  
+  .asiento:hover {
+    background: #d5d5d5;
+  }
+  
+  .asiento.seleccionado {
+    background: #006837;
+    color: #fff;
+  }
+  
+  .confirmar {
+    padding: 12px 25px;
+    background: #006837;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .confirmar:hover {
+    background: #004f29;
+  }
+  

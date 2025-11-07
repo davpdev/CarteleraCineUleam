@@ -73,8 +73,10 @@ const Register = () => {
         <div className="register-container">
             <div className="register-card">
                 <div className="register-header">
+                    <img src="/logoUleam.png" alt="Logo ULEAM" className="logo-uleam" />
                     <h2 className="register-nombre">Cine ULEAM</h2>
                 </div>
+
 
                 <h1>Registro de Usuario</h1>
 
