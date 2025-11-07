@@ -1,8 +1,8 @@
 import { supabase } from "../api/supabase.config";
-import type { IPeliculas, INuevaPelicula } from "../interfaces/peliculas.interfaces";
+import type { IPeliculas } from "../interfaces/peliculas.interfaces";
 
 export const PeliculaServices = {
-    postPelicula: async(pelicula: INuevaPelicula) =>{
+    postPelicula: async(pelicula: IPeliculas) =>{
 
         try{
             const {data, error} = await supabase.from('Peliculas').insert(pelicula).select().single();

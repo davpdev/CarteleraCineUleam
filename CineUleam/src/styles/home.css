@@ -1,0 +1,271 @@
+.home-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.home-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: white;
+}
+
+.home-title {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.home-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    font-weight: 300;
+}
+
+.filters-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.filter-select {
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.filter-select:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-2px);
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.cartelera-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.peliculas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.pelicula-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.pelicula-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.pelicula-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.pelicula-titulo {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+    flex: 1;
+}
+
+.pelicula-categoria {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 1rem;
+}
+
+.categoria-terror {
+    background: #8b0000;
+    color: white;
+}
+
+.categoria-accion {
+    background: #ff4500;
+    color: white;
+}
+
+.categoria-comedia {
+    background: #ffd700;
+    color: #333;
+}
+
+.categoria-suspenso {
+    background: #4b0082;
+    color: white;
+}
+
+.pelicula-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.pelicula-descripcion {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.pelicula-duracion {
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+}
+
+.pelicula-sala {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+}
+
+.pelicula-sala p {
+    margin: 0.25rem 0;
+    color: #555;
+    font-weight: 500;
+}
+
+.horarios-container {
+    margin-top: 1rem;
+}
+
+.horarios-container h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+}
+
+.horarios-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.horario-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.horario-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.horario-btn:active {
+    transform: scale(0.95);
+}
+
+.sin-horarios {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+}
+
+.no-peliculas {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.no-peliculas p {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.loading {
+    text-align: center;
+    padding: 4rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .home-title {
+        font-size: 2rem;
+    }
+
+    .home-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .filters-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-select {
+        min-width: 100%;
+    }
+
+    .peliculas-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pelicula-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .pelicula-categoria {
+        margin-left: 0;
+        align-self: flex-start;
+    }
+}
+

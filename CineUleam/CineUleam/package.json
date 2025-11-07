@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase-js/source": "github:supabase/supabase-js",
     "@supabase/supabase-js": "^2.80.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
@@ -28,7 +27,6 @@
     "globals": "^16.4.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
-    "vite": "^7.1.7",
-    "vite-plugin-pwa": "^1.1.0"
+    "vite": "^7.1.7"
   }
 }
