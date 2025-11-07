@@ -2,6 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css"
 import { authService } from "../services/auth.service";
+import { FcGoogle } from "react-icons/fc";
+import { Eye, EyeClosed } from "lucide-react";
+
+// declare global {
+//     interface Window {
+//       deferredPrompt: any;
+//     }
+// }
 
 // declare global {
 //     interface Window {
@@ -88,7 +96,7 @@ return (
             <h1>Iniciar Sesión</h1>
             <form onSubmit = {handleSubmit}>
                 <div className = "form-group">
-                    <label>Usuario:</label>
+                    <label>Email:</label>
                     <input
                     type = "email"
                     placeholder = "Ingrese su email"
@@ -110,7 +118,7 @@ return (
                 </div>
 
                 <button type = "submit">Iniciar Sesión</button>
-                <button type= "submit" style={ {margin : '2px'}} onClick={authService.singInGoogle}>google</button>
+                <button type= "submit" style={ {margin : '2px'}} onClick={authService.singInGoogle}><FcGoogle size = {20}/></button>
                 {/* <button type="button" onClick={handleInstallClick}>Descargar App</button> */}
             </form>
             <div className="registro-link">

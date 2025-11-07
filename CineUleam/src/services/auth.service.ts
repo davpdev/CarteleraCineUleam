@@ -1,3 +1,4 @@
+import { redirect } from "react-router-dom";
 import { supabase } from "../api/supabase.config";
 
 
@@ -6,7 +7,7 @@ export const authService = {
         try {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email,
-                password
+                password,
             })
             if (error){
                 console.log('Error al iniciar sesión', error.message)

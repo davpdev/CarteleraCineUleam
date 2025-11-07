@@ -35,10 +35,24 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         setUser(null);
       }
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("rol")
+          .eq("id", user.id)
+          .single();
+  
+        setUser({ ...user, rol: profile?.rol ?? false } as UserWithRol);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     };
   
+  
     getSession();
+  
   
     const {
       data: { subscription },
@@ -55,6 +69,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null);
       }
     });
+  
   
     return () => subscription.unsubscribe();
   }, []);
