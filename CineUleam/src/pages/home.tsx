@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 import { supabase } from "../api/supabase.config";
 import { ReservaServices } from "../services/reserva.service";
 import { HomeService } from "../services/home.service";
@@ -7,6 +8,7 @@ import { FiltrosCartelera } from "../components/FiltrosCartelera";
 import { PeliculaCard } from "../components/PeliculaCard";
 import type { IPeliculaConCartelera } from "../interfaces/home.interfaces";
 import type { ISalas } from "../interfaces/salas.interfaces";
+import { useUser } from "../context/usuario.context";
 import "../styles/home.css";
 
 const Home = () => {
@@ -16,6 +18,8 @@ const Home = () => {
     const [categoriaFiltro, setCategoriaFiltro] = useState<string>("todas");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { user } = useUser();
+    const esAdmin = user?.rol === true;
 
     useEffect(() => {
         cargarDatos();
@@ -118,10 +122,13 @@ const Home = () => {
                 )}
             </div>
 
-            <div className="subir-peliculas-container">
+            {esAdmin && (
+                <div className="subir-peliculas-container">
                     <h1>Subir Peliculas</h1>
                     <button onClick={() => navigate("/subir-peliculas")}>Subir Pelicula</button>
+                    <button onClick={() => navigate("/editar-peliculas")}>Editar Pelicula</button>
                 </div>
+            )}
         </div>
     );
 };

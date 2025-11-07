@@ -1,6 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { PeliculaServices } from "../services/pelicula.service";
-import type { IPeliculas } from "../interfaces/peliculas.interfaces";
+import { StorageService } from "../services/storage.service";
+import type { INuevaPelicula } from "../interfaces/peliculas.interfaces";
+import "../styles/subirPeliculas.css"
 const CATEGORIAS: string[] = ["terror", "accion", "comedia", "suspenso"];
 
 const SubirPeliculas: React.FC = () => {
@@ -8,43 +10,104 @@ const SubirPeliculas: React.FC = () => {
   const [descripcion, setDescripcion] = useState("");
   const [duracion, setDuracion] = useState("");
   const [errorMensaje, setErrorMensaje] = useState("");
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
-    (typeof CATEGORIAS)[number]
-  >(CATEGORIAS[0]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<(typeof CATEGORIAS)[number]>(CATEGORIAS[0]);
+  const [imagenSeleccionada, setImagenSeleccionada] = useState<File | null>(null);
+  const [previewImagen, setPreviewImagen] = useState<string | null>(null);
+  const [subiendo, setSubiendo] = useState(false);
+
+  const handleImagenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validar que sea una imagen
+      if (!file.type.startsWith('image/')) {
+        setErrorMensaje("Por favor, selecciona un archivo de imagen válido");
+        return;
+      }
+      setImagenSeleccionada(file);
+      // Crear preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImagen(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMensaje("");
+    setSubiendo(true);
 
     if (nombrePelicula === "") {
       setErrorMensaje("El nombre de la pelicula es requerido");
+      setSubiendo(false);
       return;
     }
     if (descripcion === "") {
       setErrorMensaje("La descripcion es requerida");
+      setSubiendo(false);
       return;
     }
     if (duracion === "") {
       setErrorMensaje("La duracion es requerida");
+      setSubiendo(false);
       return;
     }
-    const pelicula: Omit<IPeliculas, "idPeliculas"> = {
-      nombrePelicula,
-      descripcion,
-      duracion,
-      categoria: categoriaSeleccionada as
-        | "terror"
-        | "accion"
-        | "comedia"
-        | "suspenso",
-    };
 
-    const resultado = await PeliculaServices.postPelicula(pelicula);
-    console.log(resultado);
-    if (resultado) {
+    try {
+      // Primero crear la película para obtener el ID
+      const pelicula: INuevaPelicula = {
+        nombrePelicula,
+        descripcion,
+        duracion,
+        categoria: categoriaSeleccionada as
+          | "terror"
+          | "accion"
+          | "comedia"
+          | "suspenso",
+      };
+
+      const resultado = await PeliculaServices.postPelicula(pelicula);
+      
+      if (!resultado) {
+        setErrorMensaje("Error al subir la pelicula");
+        setSubiendo(false);
+        return;
+      }
+
+      // Si hay imagen, subirla al storage
+      if (imagenSeleccionada && resultado.idPeliculas) {
+        const urlImagen = await StorageService.uploadImage(imagenSeleccionada, resultado.idPeliculas);
+        
+        if (urlImagen) {
+          // Actualizar la película con la URL de la imagen
+          await PeliculaServices.putPelicula(resultado.idPeliculas, { urlImagen });
+        } else {
+          setErrorMensaje("Película creada pero error al subir la imagen");
+          setSubiendo(false);
+          return;
+        }
+      }
+
       setErrorMensaje("Pelicula subida correctamente");
-    } else {
+      // Limpiar campos después de subir exitosamente
+      setNombrePelicula("");
+      setDescripcion("");
+      setDuracion("");
+      setCategoriaSeleccionada(CATEGORIAS[0]);
+      setImagenSeleccionada(null);
+      setPreviewImagen(null);
+      
+      // Limpiar el input de archivo
+      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = '';
+      }
+    } catch (error) {
+      console.error("Error al subir película:", error);
       setErrorMensaje("Error al subir la pelicula");
+    } finally {
+      setSubiendo(false);
     }
   };
 
@@ -87,8 +150,33 @@ const SubirPeliculas: React.FC = () => {
             value={duracion}
             onChange={(e) => setDuracion(e.target.value)}
           />
-          <button type="submit">Subir Pelicula</button>
-          {errorMensaje && <p>{errorMensaje}</p>}
+          
+          <div style={{ marginTop: '1rem' }}>
+            <label htmlFor="imagen" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+              Imagen de la Película
+            </label>
+            <input
+              type="file"
+              id="imagen"
+              accept="image/*"
+              onChange={handleImagenChange}
+              style={{ marginBottom: '0.5rem' }}
+            />
+            {previewImagen && (
+              <div style={{ marginTop: '1rem' }}>
+                <img 
+                  src={previewImagen} 
+                  alt="Preview" 
+                  style={{ maxWidth: '300px', maxHeight: '300px', borderRadius: '8px', border: '2px solid #ddd' }}
+                />
+              </div>
+            )}
+          </div>
+
+          <button type="submit" disabled={subiendo}>
+            {subiendo ? "Subiendo..." : "Subir Pelicula"}
+          </button>
+          {errorMensaje && <p style={{ color: errorMensaje.includes("correctamente") ? "green" : "red" }}>{errorMensaje}</p>}
         </form>
       </div>
     </>

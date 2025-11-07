@@ -37,12 +37,24 @@ export const PeliculaServices = {
     },
 
     putPelicula: async(idPeliculas: string, pelicula: Partial<IPeliculas>) =>{
-        const {data, error} = await supabase.from('Peliculas').update(pelicula).eq('idPeliculas', idPeliculas).single();
-        if(error){
-            console.log('Error al obtener actualizar la pelicula por el id', error.message)
+        try {
+            const {data, error} = await supabase
+                .from('Peliculas')
+                .update(pelicula)
+                .eq('idPeliculas', idPeliculas)
+                .select()
+                .single();
+            
+            if(error){
+                console.error('Error al actualizar la pelicula:', error.message);
+                console.error('Detalles del error:', error);
+                return null;
+            }
+            return data as IPeliculas;
+        } catch (e) {
+            console.error('Error al actualizar la pelicula:', e);
             return null;
         }
-        return data as IPeliculas;
     },
 
     deletePelicula: async(idPeliculas: string) =>{

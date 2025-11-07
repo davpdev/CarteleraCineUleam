@@ -1,5 +1,6 @@
 import type { IPeliculaConCartelera } from "../interfaces/home.interfaces";
 import { HorariosDisponibles } from "./HorariosDisponibles";
+import React from "react";
 
 interface PeliculaCardProps {
     pelicula: IPeliculaConCartelera;
@@ -14,6 +15,19 @@ export const PeliculaCard = ({ pelicula, onReservar }: PeliculaCardProps) => {
 
     return (
         <div className="pelicula-card">
+            {pelicula.urlImagen && (
+                <div className="pelicula-imagen-container">
+                    <img 
+                        src={pelicula.urlImagen} 
+                        alt={pelicula.nombrePelicula}
+                        className="pelicula-imagen"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                    />
+                </div>
+            )}
+            
             <div className="pelicula-header">
                 <h2 className="pelicula-titulo">{pelicula.nombrePelicula}</h2>
                 <span className={`pelicula-categoria categoria-${pelicula.categoria}`}>

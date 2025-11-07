@@ -4,18 +4,25 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/login'
 import Home from './pages/home'
+import EditarPeliculas from './pages/editarPeliculas'
+import React from 'react'
 import Register from './pages/register'
 import SubirPeliculas from './pages/subirPeliculas'
+import SalasView from './pages/salasView'
+import SalasList from './pages/salas'
 
 
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element = {< Login/>} />
+      <Route path='/' element = {< Login/>} /> 
       <Route path='register' element = {< Register/>} />
-      <Route path='home' element = {< Home/>} />
+      <Route path='/home' element = {< Home/>} />
       <Route path='subir-peliculas' element = {< SubirPeliculas/>} />
+      <Route path='editar-peliculas' element = {< EditarPeliculas/>} />
+      <Route path='salas' element = {< SalasList/>} />
+      <Route path='salas/:idSalas' element = {< SalasView/>} />
     </Routes>
   )
 }

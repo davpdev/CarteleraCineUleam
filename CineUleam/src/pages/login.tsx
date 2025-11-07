@@ -1,13 +1,20 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css"
 import { authService } from "../services/auth.service";
+
+// declare global {
+//     interface Window {
+//       deferredPrompt: any;
+//     }
+// }
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
+    // const [, setIsReadyForInstall] = useState(false);
 
     const navigate = useNavigate();
 
@@ -44,18 +51,41 @@ const Login = () => {
 
         console.log("Login exitoso:", { email, password });
         navigate("/home");
-        
-
     };
+
+    // useEffect(() => {
+    //     const handler = (e: any) => {
+    //       e.preventDefault();
+    //       window.deferredPrompt = e;
+    //       setIsReadyForInstall(true);
+    //     };
+    
+    //     window.addEventListener("beforeinstallprompt", handler);
+    
+    //     return () => window.removeEventListener("beforeinstallprompt", handler);
+    //   }, []);
+
+    // const handleInstallClick = async () => {
+    //     const promptEvent = window.deferredPrompt;
+    //     if (!promptEvent) return;
+      
+    //     promptEvent.prompt();
+    //     const result = await promptEvent.userChoice;
+    //     console.log("Instalación resultado:", result);
+      
+    //     window.deferredPrompt = null;
+    //     setIsReadyForInstall(false);
+    //   };
+
 return (
     <div className = "login-container">
         <div className = "login-card">
-            <div className = "sistema-header">
-                <h2 className = "sistema-nombre">Cine ULEAM</h2>
+            <div className="sistema-header">
+                <img src="/logoUleam.png" alt="Logo ULEAM" className="logo-uleam" />
+                <h2 className="sistema-nombre">Cine ULEAM</h2>
             </div>
 
             <h1>Iniciar Sesión</h1>
-
             <form onSubmit = {handleSubmit}>
                 <div className = "form-group">
                     <label>Usuario:</label>
@@ -80,7 +110,8 @@ return (
                 </div>
 
                 <button type = "submit">Iniciar Sesión</button>
-                <button type= "submit" onClick={authService.singInGoogle}>google</button>
+                <button type= "submit" style={ {margin : '2px'}} onClick={authService.singInGoogle}>google</button>
+                {/* <button type="button" onClick={handleInstallClick}>Descargar App</button> */}
             </form>
             <div className="registro-link">
                 <p>¿No tienes una cuenta?</p>

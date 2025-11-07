@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #007A33, #C8102E);
+    color: #222;
+  }
+  
+  /* CONTENEDOR PRINCIPAL */
+  .subir-peliculas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh 2vw;
+    min-height: 100vh;
+  }
+  
+  /* CARD */
+  .subir-peliculas-card {
+    background: #ffffff;
+    padding: 40px 50px;
+    border-radius: 18px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.35);
+    width: 100%;
+    max-width: 480px;
+    text-align: center;
+  }
+  
+  /* TÍTULOS */
+  .subir-peliculas-card h1 {
+    font-size: 1.8rem;
+    color: #007A33;
+    margin-bottom: 25px;
+  }
+  
+  /* FORMULARIO */
+  .subir-peliculas-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  /* INPUTS Y SELECT */
+  .subir-peliculas-card input,
+  .subir-peliculas-card select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #cccccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: 0.3s;
+  }
+  
+  .subir-peliculas-card input:focus,
+  .subir-peliculas-card select:focus {
+    border-color: #007A33;
+  }
+  
+  /* BOTÓN */
+  .subir-peliculas-card button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #007A33;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .subir-peliculas-card button[type="submit"]:hover {
+    background-color: #005D27;
+  }
+  
+  /* MENSAJE */
+  .subir-peliculas-card p {
+    color: #C8102E;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  

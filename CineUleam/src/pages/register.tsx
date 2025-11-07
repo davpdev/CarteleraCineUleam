@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/register.css"
+import React from "react";
 import { authService } from "../services/auth.service";
 
 const Register = () => {
@@ -73,8 +74,10 @@ const Register = () => {
         <div className="register-container">
             <div className="register-card">
                 <div className="register-header">
+                    <img src="/logoUleam.png" alt="Logo ULEAM" className="logo-uleam" />
                     <h2 className="register-nombre">Cine ULEAM</h2>
                 </div>
+
 
                 <h1>Registro de Usuario</h1>
 

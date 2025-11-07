@@ -1,0 +1,43 @@
+.salas-container {
+    padding: 40px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .salas-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 30px;
+  }
+  
+  .sala-card {
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 10px;
+    border-left: 6px solid #006837;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+    transition: transform 0.2s;
+  }
+  
+  .sala-card:hover {
+    transform: scale(1.03);
+  }
+  
+  .sala-card button {
+    margin-top: 10px;
+    padding: 8px;
+    width: 100%;
+    border: none;
+    background: #006837;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+  
+  .sala-card button:hover {
+    background: #004f29;
+  }
+  
