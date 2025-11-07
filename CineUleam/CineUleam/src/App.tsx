@@ -3,9 +3,8 @@
 // import home from './pages/home'
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/login'
-import Home from './pages/home'
+import home from './pages/home'
 import Register from './pages/register'
-import SubirPeliculas from './pages/subirPeliculas'
 
 
 
@@ -14,8 +13,7 @@ function App() {
     <Routes>
       <Route path='/' element = {< Login/>} />
       <Route path='register' element = {< Register/>} />
-      <Route path='home' element = {< Home/>} />
-      <Route path='subir-peliculas' element = {< SubirPeliculas/>} />
+      <Route path='home' element = {< home/>} />
     </Routes>
   )
 }
