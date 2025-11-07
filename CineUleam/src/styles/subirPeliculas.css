@@ -1,82 +1,126 @@
-body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #007A33, #C8102E);
-    color: #222;
+/* 🎥 Estilos para Subir Películas */
+.subir-peliculas-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #007A33 0%, #C8102E 100%);
+  padding: 3rem 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+}
+
+.subir-peliculas-container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* 🧾 Formulario principal */
+.subir-peliculas-container form {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 2rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Inputs y select */
+.subir-peliculas-container input[type="text"],
+.subir-peliculas-container select,
+.subir-peliculas-container input[type="file"] {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.subir-peliculas-container input[type="text"]:focus,
+.subir-peliculas-container select:focus {
+  outline: none;
+  border-color: #007A33;
+  box-shadow: 0 0 10px rgba(0, 122, 51, 0.5);
+}
+
+/* Etiquetas y vista previa */
+.subir-peliculas-container label {
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.subir-peliculas-container img {
+  width: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.subir-peliculas-container img:hover {
+  transform: scale(1.03);
+}
+
+/* Botón de envío */
+.subir-peliculas-container button {
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #007A33 0%, #005D27 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.subir-peliculas-container button:hover {
+  background: linear-gradient(135deg, #005D27 0%, #007A33 100%);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 122, 51, 0.4);
+}
+
+.subir-peliculas-container button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Mensajes */
+.subir-peliculas-container p {
+  text-align: center;
+  font-weight: 500;
+}
+
+.subir-peliculas-container p.error {
+  color: #ffcccc;
+}
+
+.subir-peliculas-container p.success {
+  color: #ccffcc;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .subir-peliculas-container form {
+    padding: 1.5rem;
   }
-  
-  /* CONTENEDOR PRINCIPAL */
-  .subir-peliculas-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5vh 2vw;
-    min-height: 100vh;
+
+  .subir-peliculas-container h1 {
+    font-size: 2rem;
   }
-  
-  /* CARD */
-  .subir-peliculas-card {
-    background: #ffffff;
-    padding: 40px 50px;
-    border-radius: 18px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.35);
-    width: 100%;
-    max-width: 480px;
-    text-align: center;
-  }
-  
-  /* TÍTULOS */
-  .subir-peliculas-card h1 {
-    font-size: 1.8rem;
-    color: #007A33;
-    margin-bottom: 25px;
-  }
-  
-  /* FORMULARIO */
-  .subir-peliculas-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  
-  /* INPUTS Y SELECT */
-  .subir-peliculas-card input,
-  .subir-peliculas-card select {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #cccccc;
-    border-radius: 6px;
-    font-size: 15px;
-    transition: 0.3s;
-  }
-  
-  .subir-peliculas-card input:focus,
-  .subir-peliculas-card select:focus {
-    border-color: #007A33;
-  }
-  
-  /* BOTÓN */
-  .subir-peliculas-card button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    background-color: #007A33;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .subir-peliculas-card button[type="submit"]:hover {
-    background-color: #005D27;
-  }
-  
-  /* MENSAJE */
-  .subir-peliculas-card p {
-    color: #C8102E;
-    font-size: 14px;
-    font-weight: 500;
-  }
-  
+}

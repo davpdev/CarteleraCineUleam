@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../api/supabase.config";
-import React from "react";
 import type { User } from "@supabase/supabase-js";
+import React from "react";
 
 interface UserWithRol extends User {
   rol?: boolean;
@@ -14,7 +14,7 @@ interface UserContextProps {
 
 const UserContext = createContext<UserContextProps>({
   user: null,
-  loading: true
+  loading: true,
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -23,37 +23,28 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      // Obtenemos el usuario actual
+      const { data: { user: currentUser } } = await supabase.auth.getUser();
+
+      if (currentUser) {
+        // Obtenemos el rol desde la tabla profiles
         const { data: profile } = await supabase
           .from("profiles")
           .select("rol")
-          .eq("id", user.id)
+          .eq("id", currentUser.id)
           .single();
-  
-        setUser({ ...user, rol: profile?.rol ?? false } as UserWithRol);
+
+        setUser({ ...currentUser, rol: profile?.rol ?? false } as UserWithRol);
       } else {
         setUser(null);
       }
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("rol")
-          .eq("id", user.id)
-          .single();
-  
-        setUser({ ...user, rol: profile?.rol ?? false } as UserWithRol);
-      } else {
-        setUser(null);
-      }
+
       setLoading(false);
     };
-  
-  
+
     getSession();
-  
-  
+
+    // Suscribimos a los cambios de sesión (login/logout)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
@@ -63,14 +54,14 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           .select("rol")
           .eq("id", session.user.id)
           .single();
-  
+
         setUser({ ...session.user, rol: profile?.rol ?? false } as UserWithRol);
       } else {
         setUser(null);
       }
     });
-  
-  
+
+    // Limpiamos la suscripción al desmontar el componente
     return () => subscription.unsubscribe();
   }, []);
 
@@ -79,7 +70,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </UserContext.Provider>
   );
-};  
+};
 
-// Hook para usarlo fácil
+// Hook para usarlo en cualquier componente
 export const useUser = (): UserContextProps => useContext(UserContext);
