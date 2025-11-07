@@ -5,7 +5,6 @@ body {
     color: #222;
 }
 
-/* CONTENEDOR */
 .login-container {
     display: flex;
     justify-content: center;
@@ -14,7 +13,6 @@ body {
     min-height: 100vh;
 }
 
-/* CARD */
 .login-card {
     background: #ffffff;
     padding: 40px 50px;
@@ -25,13 +23,11 @@ body {
     text-align: center;
 }
 
-/* LOGO */
 .logo-uleam {
     width: 110px;
     margin-bottom: 10px;
 }
 
-/* TÍTULOS */
 .sistema-nombre {
     font-size: 1.8rem;
     font-weight: bold;
@@ -44,7 +40,6 @@ body {
     color: #222;
 }
 
-/* INPUTS */
 .form-group {
     margin-bottom: 20px;
     text-align: left;
@@ -89,7 +84,6 @@ button[type="submit"]:hover {
     background-color: #005D27;
 }
 
-/* BOTÓN GOOGLE */
 button[style] {
     border: 2px solid #C8102E !important;
     background: transparent !important;
@@ -101,13 +95,11 @@ button[style]:hover {
     color: #fff !important;
 }
 
-/* ERROR */
 .error-message {
     color: #C8102E;
     font-size: 14px;
 }
 
-/* REGISTRO */
 .registro-link {
     margin-top: 25px;
 }
