@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css"
 import { authService } from "../services/auth.service";
+import { FcGoogle } from "react-icons/fc";
+import { Eye, EyeClosed } from "lucide-react";
 
 // declare global {
 //     interface Window {
@@ -14,6 +16,7 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     // const [, setIsReadyForInstall] = useState(false);
 
     const navigate = useNavigate();
@@ -107,10 +110,11 @@ return (
                     onChange = {(e) => setPassword(e.target.value)}
                     />
                     {errorPassword && <p className = "error-message">La contraseña es requerida</p>}
+                
                 </div>
 
                 <button type = "submit">Iniciar Sesión</button>
-                <button type= "submit" style={ {margin : '2px'}} onClick={authService.singInGoogle}>google</button>
+                <button type= "submit" style={ {margin : '2px'}} onClick={authService.singInGoogle}><FcGoogle size = {20}/></button>
                 {/* <button type="button" onClick={handleInstallClick}>Descargar App</button> */}
             </form>
             <div className="registro-link">
