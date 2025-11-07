@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css"
 import { authService } from "../services/auth.service";
 import { FcGoogle } from "react-icons/fc";
-import { Eye, EyeClosed } from "lucide-react";
+// import { Eye, EyeClosed } from "lucide-react";
 
 // declare global {
 //     interface Window {
@@ -16,7 +16,6 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [errorEmail, setErrorEmail] = useState(false);
     const [errorPassword, setErrorPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     // const [, setIsReadyForInstall] = useState(false);
 
     const navigate = useNavigate();
