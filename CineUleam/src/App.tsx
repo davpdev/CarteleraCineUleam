@@ -15,11 +15,11 @@ function App() {
   return (
     <Routes>
       <Route path='/' element = {< Login/>} /> 
-      <Route path='register' element = {< Register/>} />
-      <Route path='home' element = {< Home/>} />
-      <Route path='subir-peliculas' element = {< SubirPeliculas/>} />
-      <Route path='salas' element = {< SalasList/>} />
-      <Route path='salas/:idSalas' element = {< SalasView/>} />
+      <Route path='/register' element = {< Register/>} />
+      <Route path='/home' element = {< Home/>} />
+      <Route path='/subir-peliculas' element = {< SubirPeliculas/>} />
+      <Route path='/salas' element = {< SalasList/>} />
+      <Route path='/salas/:idSalas' element = {< SalasView/>} />
     </Routes>
   )
 }

@@ -1,18 +1,19 @@
 import { supabase } from "../api/supabase.config";
-import type { IPeliculas, INuevaPelicula } from "../interfaces/peliculas.interfaces";
+import type { IPeliculas } from "../interfaces/peliculas.interfaces";
 
 export const PeliculaServices = {
-    postPelicula: async(pelicula: INuevaPelicula) =>{
-
+    postPelicula: async(pelicula: Omit<IPeliculas, "idPeliculas">) =>{
         try{
             const {data, error} = await supabase.from('Peliculas').insert(pelicula).select().single();
             if(error){
                 console.log('Error al subir pelicula', error.message);
-                return null;
+                console.log('Error details:', error);
+                throw error; // Lanzar el error para que pueda ser capturado
             }
             return data as IPeliculas;
         }catch (e){
-            console.log('Error', e)
+            console.log('Error', e);
+            throw e; // Re-lanzar para manejo de errores
         }
     },
 

@@ -1,57 +1,87 @@
 import { useState } from "react";
 import { PeliculaServices } from "../services/pelicula.service";
 import type { IPeliculas } from "../interfaces/peliculas.interfaces";
+import { useUser } from "../context/usuario.context";
 const CATEGORIAS: string[] = ["terror", "accion", "comedia", "suspenso"];
-import { supabase } from "../api/supabase.config";
 
 const SubirPeliculas: React.FC = () => {
   const [nombrePelicula, setNombrePelicula] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [duracion, setDuracion] = useState("");
   const [errorMensaje, setErrorMensaje] = useState("");
+  const [successMensaje, setSuccessMensaje] = useState("");
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<
     (typeof CATEGORIAS)[number]
   >(CATEGORIAS[0]);
+  
+  const { user, loading } = useUser();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMensaje("");
+    setSuccessMensaje("");
 
-    if (nombrePelicula === "") {
-      setErrorMensaje("El nombre de la pelicula es requerido");
+    if (loading) {
+      setErrorMensaje("Cargando información de usuario...");
       return;
     }
-    if (descripcion === "") {
-      setErrorMensaje("La descripcion es requerida");
-      return;
-    }
-    if (duracion === "") {
-      setErrorMensaje("La duracion es requerida");
-      return;
-    }
-    const user = (await supabase.auth.getUser()).data.user;
-    if (!user) {
+
+    if (!user || !user.id) {
       setErrorMensaje("Debes iniciar sesión para subir una película");
       return;
     }
-    const pelicula: Omit<IPeliculas, "idPeliculas"> = {
-      nombrePelicula,
-      descripcion,
-      duracion,
-      categoria: categoriaSeleccionada as
-        | "terror"
-        | "accion"
-        | "comedia"
-        | "suspenso",
-        usuario_id: user.id
-    };
 
-    const resultado = await PeliculaServices.postPelicula(pelicula);
-    console.log(resultado);
-    if (resultado) {
-      setErrorMensaje("Pelicula subida correctamente");
-    } else {
-      setErrorMensaje("Error al subir la pelicula");
+    if (nombrePelicula.trim() === "") {
+      setErrorMensaje("El nombre de la pelicula es requerido");
+      return;
+    }
+    if (descripcion.trim() === "") {
+      setErrorMensaje("La descripcion es requerida");
+      return;
+    }
+    if (duracion.trim() === "") {
+      setErrorMensaje("La duracion es requerida");
+      return;
+    }
+
+    try {
+      const pelicula: Omit<IPeliculas, "idPeliculas"> = {
+        nombrePelicula: nombrePelicula.trim(),
+        descripcion: descripcion.trim(),
+        duracion: duracion.trim(),
+        categoria: categoriaSeleccionada as
+          | "terror"
+          | "accion"
+          | "comedia"
+          | "suspenso",
+        usuario_id: user.id
+      };
+
+      const resultado = await PeliculaServices.postPelicula(pelicula);
+      
+      if (resultado) {
+        setSuccessMensaje("Pelicula subida correctamente");
+        // Limpiar el formulario
+        setNombrePelicula("");
+        setDescripcion("");
+        setDuracion("");
+        setCategoriaSeleccionada(CATEGORIAS[0]);
+      }
+    } catch (error: any) {
+      console.error("Error al subir película:", error);
+      
+      // Manejar error de RLS específicamente
+      if (error?.message?.includes("row-level security policy")) {
+        setErrorMensaje(
+          "Error de permisos: No tienes permisos para crear películas. " +
+          "Verifica que las políticas RLS en Supabase permitan INSERT para usuarios autenticados. " +
+          `Usuario ID: ${user.id}`
+        );
+      } else if (error?.message) {
+        setErrorMensaje(`Error al subir la película: ${error.message}`);
+      } else {
+        setErrorMensaje("Error al subir la película. Verifica tu conexión y permisos.");
+      }
     }
   };
 
@@ -94,8 +124,11 @@ const SubirPeliculas: React.FC = () => {
             value={duracion}
             onChange={(e) => setDuracion(e.target.value)}
           />
-          <button type="submit">Subir Pelicula</button>
-          {errorMensaje && <p>{errorMensaje}</p>}
+          <button type="submit" disabled={loading || !user}>
+            {loading ? "Cargando..." : "Subir Pelicula"}
+          </button>
+          {errorMensaje && <p style={{ color: "red" }}>{errorMensaje}</p>}
+          {successMensaje && <p style={{ color: "green" }}>{successMensaje}</p>}
         </form>
       </div>
     </>

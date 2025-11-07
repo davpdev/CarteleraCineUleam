@@ -1,7 +1,7 @@
 export interface IReserva{
   idReserva: string;
   peliculasID: string;
-  usuarioId: string;
+  usuarioid: string;
   salasID: string;
   reserva: boolean;
 }
